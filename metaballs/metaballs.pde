@@ -107,6 +107,10 @@ public class BallBag {
     bb.addBall(new GravBall(new Metaball(color(0,0,0),random(width),random(height),50 + random(150)),new PVector(0,0),50 + random(200)));
   }
   
+  public void addRandomNegBall(){
+    bb.addBall(new GravBall(new Metaball(color(0,0,0),random(width),random(height),-50 - random(150)),new PVector(0,0),50 + random(200)));
+  }
+  
 }
 
 BallBag bb;
@@ -117,8 +121,9 @@ void setup(){
   frameRate(30);
   colorMode(HSB, 100);
   bb = new BallBag();
-  for (int i = 0; i < 10; i++){
+  for (int i = 0; i < 5; i++){
     bb.addRandomBall();
+    //bb.addRandomNegBall();
   }
 }
 
