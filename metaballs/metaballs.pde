@@ -13,9 +13,17 @@ public class Metaball {
     radius = r;
   }
   
+  //Euclidean distane, threshhold of ~.1f works well
   public float f(PVector x) {
     return (float)(radius/(PVector.sub(x,pos)).magSq());
   }
+
+  //Manhattan distance, threshhold of ~.2f works well
+  public float g(PVector x) {
+    double denom  = Math.max(abs(pos.x-x.x),abs(pos.y-x.y));
+    return (float) (radius/(denom*denom));
+  }
+  
 }
 
 public class GravBall {
@@ -68,7 +76,7 @@ public class BallBag {
       for (int y = 0; y < height; y++){
         float val = 0;
         for (GravBall b: balls){
-          val += b.ball.f(new PVector(x,y));
+          val += b.ball.g(new PVector(x,y));
         }
         if (val > threshhold) {
           pixels[y*width+x] = color(30,100,100);
@@ -102,7 +110,7 @@ public class BallBag {
 }
 
 BallBag bb;
-double threshhold = .1;
+double threshhold = .2f;
 
 void setup(){
   size(640,480);
