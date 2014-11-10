@@ -76,10 +76,10 @@ public class BallBag {
       for (int y = 0; y < height; y++){
         float val = 0;
         for (GravBall b: balls){
-          val += b.ball.g(new PVector(x,y));
+          val += b.ball.f(new PVector(x,y));
         }
         if (val > threshhold) {
-          pixels[y*width+x] = color(30,100,100);
+          pixels[y*width+x] = color(30,100,(int)(Math.sqrt(val)*100));
         }
         else{
           pixels[y*width+x] = color(0,0,0);
@@ -110,7 +110,7 @@ public class BallBag {
 }
 
 BallBag bb;
-double threshhold = .2f;
+double threshhold = .03f;
 
 void setup(){
   size(640,480);
