@@ -81,8 +81,8 @@ public class BallBag {
         if (val > threshhold) {
           pixels[y*width+x] = color(30,100,(int)(Math.sqrt(val)*100));
         }
-        else if (Math.abs(val) < -threshhold) {
-          pixels[y*width+x] = color(60,100,(int)(Math.sqrt(val)*100));
+        else if (Math.abs(val) > threshhold) {
+          pixels[y*width+x] = color(60,100,(int)(Math.sqrt(-1*val)*100));
         }
         else{
           pixels[y*width+x] = color(0,0,0);
@@ -94,11 +94,12 @@ public class BallBag {
   
   public void gravWell(PVector pos, float mass){
     for (GravBall b: balls){
-      double mag = GRAVITY*b.mass*mass/(PVector.sub(b.ball.pos,pos).magSq());
+      double mag = -GRAVITY*b.mass*mass/(PVector.sub(b.ball.pos,pos).magSq());
           if (mag != mag){
             mag = .01;
           } 
-          mag = Math.min(mag,10);
+          mag = Math.min(Math.abs(mag),10)*Math.signum(mag);
+          //mag = Math.min(mag,10);
           PVector dir = PVector.sub(pos,b.ball.pos);
           dir.normalize();
           dir.mult((float)mag);
@@ -117,15 +118,15 @@ public class BallBag {
 }
 
 BallBag bb;
-double threshhold = .03f;
+double threshhold = .003f;
 
 void setup(){
   size(640,480);
   frameRate(30);
   colorMode(HSB, 100);
   bb = new BallBag();
-  for (int i = 0; i < 5; i++){
-    bb.addRandomBall();
+  for (int i = 0; i < 10; i++){
+    //bb.addRandomBall();
     bb.addRandomNegBall();
   }
 }
