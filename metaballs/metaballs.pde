@@ -21,7 +21,7 @@ public class Metaball {
   //Manhattan distance, threshhold of ~.2f works well
   public float g(PVector x) {
     double denom  = Math.max(abs(pos.x-x.x),abs(pos.y-x.y));
-    return (float) (radius/(denom*denom));
+    return (float)(radius/(denom*denom));
   }
   
 }
@@ -81,6 +81,9 @@ public class BallBag {
         if (val > threshhold) {
           pixels[y*width+x] = color(30,100,(int)(Math.sqrt(val)*100));
         }
+        else if (Math.abs(val) < -threshhold) {
+          pixels[y*width+x] = color(60,100,(int)(Math.sqrt(val)*100));
+        }
         else{
           pixels[y*width+x] = color(0,0,0);
         }
@@ -108,7 +111,7 @@ public class BallBag {
   }
   
   public void addRandomNegBall(){
-    bb.addBall(new GravBall(new Metaball(color(0,0,0),random(width),random(height),-50 - random(150)),new PVector(0,0),50 + random(200)));
+    bb.addBall(new GravBall(new Metaball(color(0,0,0),random(width),random(height),-50 - random(150)),new PVector(0,0),-50 - random(200)));
   }
   
 }
@@ -123,7 +126,7 @@ void setup(){
   bb = new BallBag();
   for (int i = 0; i < 5; i++){
     bb.addRandomBall();
-    //bb.addRandomNegBall();
+    bb.addRandomNegBall();
   }
 }
 
